@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Easy Level</title>
+    <style>
+        body{
+        
+            background: url('./Image/5.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo-main">
+            <img src="./Image/20230730_010451_0000.png" alt="">
+        </div>
+    </nav>
+     <div class="main-box">
+        <h1>Ultron Level</h1>
+        <div class="quiz">
+            <h2 id="question">
+                What Is Favourite Car?
+            </h2>
+            <div id="Answers">
+                <button class="answer1 btn">answer1</button>
+                <button class="answer2 btn">answer2</button>
+                <button class="answer3 btn">answer3</button>
+                <button class="answer4 btn">answer4</button>
+            </div>
+            <button class="btn" id="next-btn">Next Quesion</button>
+        </div> 
+     </div>
+</body>
+<script>
+    const questions = [
+    {
+        question: " What year was the first Iron Man movie released, kicking off the Marvel Cinematic Universe?",
+        answers : [
+            { text:"2007" , correct : false },
+            { text:"2008" , correct : true },
+            { text:"2009" , correct : false },
+            { text:"2010" , correct : false },
+        ]
+    },
+    {
+        question: "Who was the first major character to die?",
+        answers : [
+            { text:"Black Widow" , correct : false },
+            { text:"Heimdall" , correct : true },
+            { text:"Nebula" , correct : false },
+            { text:"Tony Stark" , correct : false },
+        ]
+    },
+    {
+        question: "Who was the first female superhero to appear in the title of an MCU film?",
+        answers : [
+            { text:"Black Widow" , correct : true },
+            { text:"Gamora" , correct : false },
+            { text:"Wasp" , correct : false },
+            { text:"Wanda Maximoff" , correct : false },
+        ]
+    },
+    {
+        question: "Which superhero does Bruce Banner transform into?",
+        answers : [
+            { text:"Iron Man" , correct : false },
+            { text:"Hawkeye" , correct : false },
+            { text:"Thor" , correct : false },
+            { text:"The Hulk" , correct : true },
+        ]
+    },
+    {
+        question: "Who diverts a nuclear missile into a wormhole and defeats the Chitauri army?",
+        answers : [
+            { text:"Black Widow" , correct : false },
+            { text:"The Hulk" , correct : false },
+            { text:"Iron Man" , correct : true },
+            { text:"Thor" , correct : false },
+        ]
+    },
+    {
+        question: "Who is killed by Loki in the Avengers?",
+        answers : [
+            { text:"Maria Hill" , correct : false },
+            { text:"Nick Fury" , correct : false },
+            { text:"Agent Coulson" , correct : true },
+            { text:"Doctor Erik Selvig" , correct : false },
+        ]
+    },
+    {
+        question: "Who is Black Panther’s sister?",
+        answers : [
+            { text:"Shuri" , correct : true },
+            { text:"Nakia" , correct : false },
+            { text:"Ramonda" , correct : false },
+            { text:"Okoye" , correct : false },
+        ]
+    },
+    {
+        question: "Who is the villain in Guardians of the Galaxy: Vol 1?",
+        answers : [
+            { text:"Thanos" , correct : false },
+            { text:"Ronan The Accuser" , correct : false },
+            { text:"Obidiah Stane" , correct : false },
+            { text:"Yondu Udonta" , correct : true },
+        ]
+    },
+    {
+        question: "What is Mjölnir?",
+        answers : [
+            { text:"Loki’s Scepter" , correct : false },
+            { text:"Captain America’s Shield" , correct : false },
+            { text:"Winter Soldier’s Arm" , correct : false },
+            { text:"Thor’s Hammer" , correct : true },
+        ]
+    },
+    {
+        question: "Who Disappered in infinity war?",
+        answers : [
+            { text:"Black Panther" , correct : true },
+            { text:"Rocket" , correct : false },
+            { text:"Captain America" , correct : false },
+            { text:"Wanda" , correct : false },
+        ]
+    }
+];
+
+const questionElement = document.getElementById('question');
+const answerButton = document.getElementById('Answers');
+const nextButton = document.getElementById('next-btn');
+
+let currentqueIndex = 0;
+let score = 0;
+
+function startquiz(){
+    resetState();
+    currentqueIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+    showQuestion();
+}
+
+function showQuestion(){
+    let currentQuestion = questions[currentqueIndex];
+    let questionNo = currentqueIndex + 1;
+    questionElement.innerHTML = questionNo + "."+ currentQuestion.question;
+
+    currentQuestion.answers.forEach(answer =>{
+        const button = document.createElement("button")
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        answerButton.appendChild(button)
+        if(answer.correct){
+            button.dataset.correct= answer.correct;
+        }
+        button.addEventListener('click',selectAnswer);
+    });
+}
+
+function resetState(){
+    nextButton.style.display="none";
+    while(answerButton.firstChild){
+        answerButton.removeChild(answerButton.firstChild);
+    }
+}
+
+function selectAnswer(e){
+    const selectedbtn = e.target;
+    const iscorrect = selectedbtn.dataset.correct === "true";
+    if(iscorrect){
+        selectedbtn.classList.add("correct");
+        score++;
+    }
+    else{
+        selectedbtn.classList.add("incorrect");
+    }
+    Array.from(answerButton.children).forEach(button=>{
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display="block"
+}
+
+nextButton.addEventListener("click",()=>{
+    if(currentqueIndex<questions.length){
+        handlenextButton();
+    }
+    else{
+        startquiz();
+    }
+})
+
+function handlenextButton(){
+    currentqueIndex++;
+    if(currentqueIndex<questions.length){
+        resetState();
+        showQuestion();
+    }
+    else{
+        showScore();
+    }
+}
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML=`You Scored ${score} out of ${questions.length}`;
+    nextButton.innerHTML = "Play Again";
+    nextButton.style.display = "block"
+}
+
+startquiz();
+</script>
+</html>

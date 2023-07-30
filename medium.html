@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Medium Level</title>
+    <style>
+        body{
+        
+            background: url('./Image/4.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo-main">
+            <img src="./Image/20230730_010451_0000.png" alt="">
+        </div>
+    </nav>
+     <div class="main-box">
+        <h1>Thenos Level</h1>
+        <div class="quiz">
+            <h2 id="question">
+                What Is Favourite Car?
+            </h2>
+            <div id="Answers">
+                <button class="answer1 btn">answer1</button>
+                <button class="answer2 btn">answer2</button>
+                <button class="answer3 btn">answer3</button>
+                <button class="answer4 btn">answer4</button>
+            </div>
+            <button class="btn" id="next-btn">Next Quesion</button>
+        </div> 
+     </div>
+</body>
+<script>
+    const questions = [
+    {
+        question: "What is the name of Thor's Hammer?",
+        answers : [
+            { text:"Aesir" , correct : false },
+            { text:"Fâner" , correct : false },
+            { text:"Mjolnir" , correct : true },
+            { text:"Rêquaer" , correct : false },
+        ]
+    },
+    {
+        question: "What is Captain America’s shield made of?",
+        answers : [
+            { text:"Adamantium" , correct : false },
+            { text:"Promethium" , correct : false },
+            { text:"Titanium" , correct : false },
+            { text:"Vibranium" , correct : true },
+        ]
+    },
+    {
+        question: "Erik Kilmonger is the villain in which movie?",
+        answers : [
+            { text:"Captain America: The First Avenger" , correct : false },
+            { text:"Thor" , correct : false },
+            { text:"Black Panther" , correct : true },
+            { text:"Iron Man 3" , correct : false },
+        ]
+    },
+    {
+        question: "Who was gone to bring soul stone?",
+        answers : [
+            { text:"Hawkeye" , correct : true },
+            { text:"Iron-Man" , correct : false },
+            { text:"Quill" , correct : false },
+            { text:"Rocket" , correct : false },
+        ]
+    },
+    {
+        question: "In which MCU movie Spider-man was introduced?",
+        answers : [
+            { text:"Spider-Man: Far From Home" , correct : false },
+            { text:"Infinity War" , correct : false },
+            { text:"Spider-Man: Homecoming" , correct : false },
+            { text:"Captain America: Civil War" , correct : true },
+        ]
+    },
+    {
+        question: "J.A.R.V.I.S was programmed by Captain America. True or false?",
+        answers : [
+            { text:"True" , correct : false },
+            { text:"False" , correct : true },
+        ]
+    },
+    {
+        question: "Who made Captain America’s shield?",
+        answers : [
+            { text:"Nick Fury" , correct : false },
+            { text:"Howard Stark" , correct : true },
+            { text:"Tony Stark" , correct : false },
+            { text:"Bruce Banner" , correct : false },
+        ]
+    },
+    {
+        question: "In which US city do the Avengers battle the Chitauri?",
+        answers : [
+            { text:"Los Angeles" , correct : false },
+            { text:"New York City" , correct : true },
+            { text:"Washington, DC" , correct : false },
+            { text:"Miami" , correct : false },
+        ]
+    },
+    {
+        question: "Which of the following characters did not disappear during the ”blip”?",
+        answers : [
+            { text:"Spiderman" , correct : false },
+            { text:"Black Panther" , correct : false },
+            { text:"Doctor Strange" , correct : false },
+            { text:"Rocket" , correct : true },
+        ]
+    },
+    {
+        question: "Which actor plays Groot?",
+        answers : [
+            { text:"John Cena" , correct : false },
+            { text:"Dwayne “The Rock” Johnson" , correct : false },
+            { text:"Vin Diesel" , correct : true },
+            { text:"James Earl Jones" , correct : false },
+        ]
+    }
+];
+
+const questionElement = document.getElementById('question');
+const answerButton = document.getElementById('Answers');
+const nextButton = document.getElementById('next-btn');
+
+let currentqueIndex = 0;
+let score = 0;
+
+function startquiz(){
+    resetState();
+    currentqueIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+    showQuestion();
+}
+
+function showQuestion(){
+    let currentQuestion = questions[currentqueIndex];
+    let questionNo = currentqueIndex + 1;
+    questionElement.innerHTML = questionNo + "."+ currentQuestion.question;
+
+    currentQuestion.answers.forEach(answer =>{
+        const button = document.createElement("button")
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        answerButton.appendChild(button)
+        if(answer.correct){
+            button.dataset.correct= answer.correct;
+        }
+        button.addEventListener('click',selectAnswer);
+    });
+}
+
+function resetState(){
+    nextButton.style.display="none";
+    while(answerButton.firstChild){
+        answerButton.removeChild(answerButton.firstChild);
+    }
+}
+
+function selectAnswer(e){
+    const selectedbtn = e.target;
+    const iscorrect = selectedbtn.dataset.correct === "true";
+    if(iscorrect){
+        selectedbtn.classList.add("correct");
+        score++;
+    }
+    else{
+        selectedbtn.classList.add("incorrect");
+    }
+    Array.from(answerButton.children).forEach(button=>{
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display="block"
+}
+
+nextButton.addEventListener("click",()=>{
+    if(currentqueIndex<questions.length){
+        handlenextButton();
+    }
+    else{
+        startquiz();
+    }
+})
+
+function handlenextButton(){
+    currentqueIndex++;
+    if(currentqueIndex<questions.length){
+        resetState();
+        showQuestion();
+    }
+    else{
+        showScore();
+    }
+}
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML=`You Scored ${score} out of ${questions.length}`;
+    nextButton.innerHTML = "Play Again";
+    nextButton.style.display = "block"
+}
+startquiz();
+</script>
+</html>

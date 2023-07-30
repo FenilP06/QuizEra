@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;800&family=Poppins:wght@200;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=REM:wght@100;200;300;600;800&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'REM', sans-serif;    
+    background-color: #2a154f;
+}
+
+.colors{
+    color:#2a154f;
+    color:#6b3ac7;
+    color:#b275ec;
+    color:#523797;
+    color:#908f95;
+    color:#595564;
+    color:#fd7702;
+    color:#ff8e00;
+    color:#ff5003;
+}
+
+.main-box{
+    background-color: #ff8e00;
+    max-width: 35vw;
+    border-radius: 10px;
+    margin:0 auto;
+    margin-top: 22vh;
+    padding: 25px;
+}
+
+.main-box h1{
+    font-weight: 600;
+    color: #2a154f;
+    border-bottom: 4px solid #2a154f;
+    padding-bottom: 20px;
+    font-family: 'REM', sans-serif;
+ }
+
+ .profile{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+ }
+
+ .profile-pic{
+    flex-basis: 30%;
+    height: 140px;
+ }
+
+ .profile-pic img{
+    width: 95%;
+    height: 100%;
+    background-color: #6b3ac7;
+    border-radius: 50%;
+    overflow: hidden;
+ }
+.profile-pic:hover{
+    transform: translateY(-6px);
+    transition-duration: 0.5s;
+}
+
+ .level-head{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+ }
+.level-head a{
+    text-decoration: none;
+    color: #2a154f;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+    border: 3px solid #2a154f;
+    border-radius: 15px;
+    padding: 5px 10px;
+    flex-basis: 30%;
+    cursor: pointer;
+    transition: all 0.4s ease-out;
+}
+
+.level-head a:hover{
+    color: #fd7702;
+    background-color: #2a154f;
+    letter-spacing: 1px;
+}
+.level-head-small{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.level-head-grp{
+    flex-basis: 30%;
+}
+.level-head-grp p{
+    font-size: 13px;
+    font-weight: 700;
+    margin-left: 5px;
+    color: #2a154f;
+}
+
+.quiz{
+    padding: 20px 0;
+}
+
+.quiz h2{
+    font-size: 18px;
+    font-weight: 600;
+    color: #100e4d;
+    margin-bottom: 10px;
+}
+
+.btn{
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: #523797;
+    color: #fff;
+    font-weight: 500;
+    text-align: left;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s linear;
+}
+
+.btn:hover:not([disabled]){
+    color: #fff;
+    background-color: #222;
+}
+
+.btn:disabled{
+    cursor: not-allowed;
+}
+#next-btn{
+    background-color: #100e4d;
+    color: #fff;
+    width: fit-content;
+    margin: 10px auto;
+    display: block;
+    display: none;
+}
+
+.correct{
+    background-color: #039e39;
+}
+
+.incorrect{
+    background-color: #f91f1f;
+}
+
+.main-box-welcome{
+    /* border: 2px solid black; */
+    /* background-color: #ff8e00; */
+    max-width: 40vw;
+    border-radius: 10px;
+    margin: 3vh auto;
+    padding: 25px;
+}
+.logo{
+    /* border: 2px solid red; */
+    width: 18vw;
+    height: 40vh;
+    margin: 0 auto;
+}
+.logo img{
+    width: 100%;
+    height: 100%;
+}
+
+.main-head{
+    text-align: center;
+    margin-top: 5vh;
+    color: #fd7702;
+}
+
+.wlcm-msg p{
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    text-transform: capitalize;
+}
+
+.main-box-welcome .btn{
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 20px;
+    padding: 10px 15px;
+    border: 2.5px solid #2a154f;
+    width: 20.6%;
+    margin: 20px auto;
+    display: block;
+}
+
+.main-box-welcome .btn:hover{
+    color: #fff;
+    background-color: #2a154f;
+    border: 2.5px solid #ff5003;
+}
+
+.main-box-welcome .btn:active{
+    background-color: #ff5003;
+}
+
+
+nav{
+    position: fixed;
+    width: 100%;
+    height: 15vh;
+    box-shadow: 0 3px 20px #523797;
+    top: 0%;
+    z-index: 10;
+    background-color: #2a154f;
+}
+.logo-main{
+    width: 85px;
+    height: 80px;
+    margin:5px 0 0 105px;
+}
+
+.logo-main img{
+    width: 100%;
+    height: 100%;
+}

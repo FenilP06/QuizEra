@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Hard Level</title>
+    <style>
+        body{
+        
+            background: url('./Image/3.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo-main">
+            <img src="./Image/20230730_010451_0000.png" alt="">
+        </div>
+    </nav>
+     <div class="main-box">
+        <h1>Kang Level</h1>
+        <div class="quiz">
+            <h2 id="question">
+                What Is Favourite Car?
+            </h2>
+            <div id="Answers">
+                <button class="answer1 btn">answer1</button>
+                <button class="answer2 btn">answer2</button>
+                <button class="answer3 btn">answer3</button>
+                <button class="answer4 btn">answer4</button>
+            </div>
+            <button class="btn" id="next-btn">Next Quesion</button>
+        </div> 
+     </div>
+</body>
+<script>
+    const questions = [
+    {
+        question: "Which alien race invaded New York in The Avengers?",
+        answers : [
+            { text:"Chitauri" , correct : true },
+            { text:"Kree" , correct : false },
+            { text:"Skrulls" , correct : false },
+            { text:"Shi'a" , correct : false },
+        ]
+    },
+    {
+        question: "Where did the Hulk go at the end of Age of Ultron?",
+        answers : [
+            { text:"Alternative universe" , correct : false },
+            { text:"Brazil" , correct : false },
+            { text:"Space" , correct : false },
+            { text:"Titan" , correct : true },
+        ]
+    },
+    {
+        question: "Who is the leader of S.H.I.E.L.D?",
+        answers : [
+            { text:"Nick Fury" , correct : true },
+            { text:"Tony Stark" , correct : false },
+            { text:"Bruce Banner" , correct : false },
+            { text:"Diana Prince" , correct : false },
+        ]
+    },
+    {
+        question: "What species is Loki revealed to be?",
+        answers : [
+            { text:"Asgardians" , correct : false },
+            { text:"Dark Elves" , correct : false },
+            { text:"Frost Giants" , correct : true },
+            { text:"Kronan" , correct : false },
+        ]
+    },
+    {
+        question: "What is Agent Coulson's first name?",
+        answers : [
+            { text:"Phil" , correct : true },
+            { text:"James" , correct : false },
+            { text:"John" , correct : false },
+            { text:"Andy" , correct : false },
+        ]
+    },
+    {
+        question: "What type of doctor is Stephen Strange?",
+        answers : [
+            { text:"Cardiothoracic surgeon" , correct : false },
+            { text:"Neurosurgeon" , correct : true },
+            { text:"Plastic surgeon" , correct : false },
+            { text:"Trauma surgeon" , correct : false },
+        ]
+    },
+    {
+        question: "Who was the last holder of the Space Stone before Thanos claims it for his Infinity Gauntlet?",
+        answers : [
+            { text:"Thor" , correct : false },
+            { text:"Loki" , correct : true },
+            { text:"The Collector" , correct : false },
+            { text:"Tony Stark" , correct : false },
+        ]
+    },
+    {
+        question: "What fake name does Natasha use when she first meets Tony?",
+        answers : [
+            { text:"Natalie Rushman" , correct : true },
+            { text:"Natalia Romanoff" , correct : false },
+            { text:"Nicole Rohan" , correct : false },
+            { text:"Naya Rabe" , correct : false },
+        ]
+    },
+    {
+        question: "What was Steven Strange’s career before he learned to use magic?",
+        answers : [
+            { text:"An Accountant" , correct : true },
+            { text:"A Lawyer" , correct : false },
+            { text:"A Surgeon" , correct : false },
+            { text:"An Astronaut" , correct : false },
+        ]
+    },
+    {
+        question: "What does Thanos want to bring to the universe?",
+        answers : [
+            { text:"Hope" , correct : false },
+            { text:"Balance" , correct : true },
+            { text:"Peace" , correct : false },
+            { text:"Destruction" , correct : false },
+        ]
+    }
+];
+
+const questionElement = document.getElementById('question');
+const answerButton = document.getElementById('Answers');
+const nextButton = document.getElementById('next-btn');
+
+let currentqueIndex = 0;
+let score = 0;
+
+function startquiz(){
+    resetState();
+    currentqueIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+    showQuestion();
+}
+
+function showQuestion(){
+    let currentQuestion = questions[currentqueIndex];
+    let questionNo = currentqueIndex + 1;
+    questionElement.innerHTML = questionNo + "."+ currentQuestion.question;
+
+    currentQuestion.answers.forEach(answer =>{
+        const button = document.createElement("button")
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        answerButton.appendChild(button)
+        if(answer.correct){
+            button.dataset.correct= answer.correct;
+        }
+        button.addEventListener('click',selectAnswer);
+    });
+}
+
+function resetState(){
+    nextButton.style.display="none";
+    while(answerButton.firstChild){
+        answerButton.removeChild(answerButton.firstChild);
+    }
+}
+
+function selectAnswer(e){
+    const selectedbtn = e.target;
+    const iscorrect = selectedbtn.dataset.correct === "true";
+    if(iscorrect){
+        selectedbtn.classList.add("correct");
+        score++;
+    }
+    else{
+        selectedbtn.classList.add("incorrect");
+    }
+    Array.from(answerButton.children).forEach(button=>{
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display="block"
+}
+
+nextButton.addEventListener("click",()=>{
+    if(currentqueIndex<questions.length){
+        handlenextButton();
+    }
+    else{
+        startquiz();
+    }
+})
+
+function handlenextButton(){
+    currentqueIndex++;
+    if(currentqueIndex<questions.length){
+        resetState();
+        showQuestion();
+    }
+    else{
+        showScore();
+    }
+}
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML=`You Scored ${score} out of ${questions.length}`;
+    nextButton.innerHTML = "Play Again";
+    nextButton.style.display = "block"
+}
+startquiz();
+</script>
+</html>
